@@ -1,8 +1,10 @@
 import json
 import os
+import shutil
 from config import Config
 from mss import mss
 from utils.misc import close_down_d2
+from shutil import copyfile
 
 
 def adjust_settings():
@@ -43,6 +45,7 @@ def adjust_settings():
         print(f"Detected 720p Monitor res. Forcing fullscreen mode.")
         curr_settings["Window Mode"] = 1
     # write back to settings.json
+    shutil.move(d2_saved_games + "\\Settings.json", d2_saved_games + "\\Settings.bak")
     with open(d2_saved_games + "\\Settings.json", 'w') as outfile:
         json.dump(curr_settings, outfile)
     print("Adapted settings succesfully. You can now restart D2r and botty.")
