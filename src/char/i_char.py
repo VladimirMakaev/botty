@@ -40,6 +40,7 @@ class IChar:
                     return CharacterCapabilities(can_teleport_natively=False, can_teleport_with_charges=True)
                 else:
                     return CharacterCapabilities(can_teleport_natively=True, can_teleport_with_charges=False)
+            Logger.debug(f"Teleport is mapped but teleport skill isn't selected. Assuming charges ran out")
             return CharacterCapabilities(can_teleport_natively=False, can_teleport_with_charges=True)
         else:
             return CharacterCapabilities(can_teleport_natively=False, can_teleport_with_charges=False)
@@ -141,7 +142,7 @@ class IChar:
        if self._skill_hotkeys["teleport"] and not self._ui_manager.is_right_skill_selected(["TELE_ACTIVE", "TELE_INACTIVE"]):
             keyboard.send(self._skill_hotkeys["teleport"])
             wait(0.1, 0.2)
-       return self._ui_manager.is_right_skill_selected(["TELE_ACTIVE", "TELE_INACTIVE"])
+       return self._ui_manager.is_right_skill_selected(["TELE_ACTIVE", "TELE_INACTIVE"], debug=True)
 
     def get_skill_charges(self, img: np.ndarray = None):
         if img is None:

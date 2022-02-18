@@ -76,12 +76,15 @@ class UiManager():
         avg = np.average(img)
         return avg > 75.0
 
-    def is_right_skill_selected(self, template_list: List[str]) -> bool:
+    def is_right_skill_selected(self, template_list: List[str], debug = False) -> bool:
         """
         :return: Bool if skill is currently the selected skill on the right skill slot.
         """
         for template in template_list:
-            if self._template_finder.search(template, self._screen.grab(), threshold=0.84, roi=self._config.ui_roi["skill_right"]).valid:
+            m = self._template_finder.search(template, self._screen.grab(), threshold=0.84, roi=self._config.ui_roi["skill_right"]) 
+            if debug:
+                Logger.debug(f"Match for {template}: {m}")
+            if m.valid:
                 return True
         return False
 
